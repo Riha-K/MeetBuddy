@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MeetBuddy</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>MeetBuddy</h1>
+      <p id="status">Checking the current tab…</p>
+    </header>
+    <label>
+      Send the summary to
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+    </label>
+    <label>
+      Server
+      <input id="server" type="url" spellcheck="false" />
+    </label>
+    <button id="send" type="button">Send summary</button>
+    <p id="detail"></p>
+    <script src="popup.js"></script>
+  </body>
+</html>

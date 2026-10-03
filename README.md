@@ -1,118 +1,57 @@
-# AI Meeting Summarizer Chrome Extension
+# MeetBuddy
 
-A Chrome extension that automatically captures and summarizes Google Meet conversations using AI, making your meetings more productive and accessible.
+Chrome extension that captures Google Meet captions and sends them to a small Node server. The server summarizes the transcript with OpenAI and emails the summary. It reads the captions already on the page and does not use the microphone.
 
-## Features
+## What it does
 
-- 🎯 Automatic Google Meet detection
-- 🎤 Automatic caption enablement
-- 📝 Real-time caption capture
-- 🤖 AI-powered meeting summarization
-- 📧 Email delivery of meeting summaries
-- 🔒 Privacy-focused design
+1. Notice when a Google Meet tab is open
+2. Turn captions on and keep each line once it stops changing
+3. When the meeting ends, or when you press **Send summary**, post the transcript to the local server
+4. Summarize it and mail the result
 
-## Technical Stack
+## Stack
 
-- **Frontend:**
+- Chrome extension, Manifest V3: Meet page script plus a popup
+- Node.js and Express for the API
+- OpenAI for the summary
+- Nodemailer for mail
 
-  - HTML/CSS/JavaScript
-  - Chrome Extension Manifest V3
-  - Google Meet DOM manipulation
+## Server
 
-- **Backend:**
-
-  - Node.js
-  - Express.js (for API endpoints)
-  - OpenAI GPT API (for summarization)
-  - Nodemailer (for email delivery)
-
-- **APIs & Services:**
-  - Google Meet Captions API
-  - OpenAI API
-  - SMTP Email Service
-
-## Project Structure
-
-```
-AIMeetingSummarizer/
-├── extension/
-│   ├── manifest.json
-│   ├── background.js
-│   ├── content.js
-│   ├── popup/
-│   │   ├── popup.html
-│   │   ├── popup.css
-│   │   └── popup.js
-│   └── icons/
-├── server/
-│   ├── index.js
-│   ├── summarizer.js
-│   ├── emailService.js
-│   └── package.json
-└── README.md
+```bash
+cd server
+npm install
+copy .env.example .env
+npm start
 ```
 
-## Getting Started
+Fill in `server/.env`:
 
-1. Clone the repository
-2. Set up the backend:
-   ```bash
-   cd server
-   npm install
-   ```
-3. Configure environment variables:
-   - Create `.env` file in the server directory
-   - Add required API keys and configuration
-4. Load the extension in Chrome:
-   - Open Chrome and go to `chrome://extensions/`
-   - Enable Developer Mode
-   - Click "Load unpacked" and select the `extension` directory
-
-## How It Works
-
-1. **Meeting Detection:**
-
-   - Extension monitors for new Google Meet tabs
-   - Automatically detects when a meeting starts
-
-2. **Caption Management:**
-
-   - Automatically enables captions when meeting starts
-   - Captures and stores captions in real-time
-
-3. **Summarization Process:**
-   - When meeting ends, captured captions are sent to backend
-   - AI processes the content to generate a concise summary
-   - Summary is formatted and sent via email
-
-## Required Environment Variables
-
-```
+```text
 OPENAI_API_KEY=your_openai_api_key
 SMTP_HOST=your_smtp_host
+SMTP_PORT=587
 SMTP_USER=your_smtp_username
 SMTP_PASS=your_smtp_password
 ```
 
-## Development Roadmap
+The API listens on `http://127.0.0.1:3001`.
 
-1. **Phase 1:**
+- `GET /health` — server is up
+- `POST /api/summarize` — body `{ "transcript", "to" }`, returns the summary after the mail is sent
 
-   - Basic Chrome extension setup
-   - Google Meet detection
-   - Caption enabling functionality
+## Extension
 
-2. **Phase 2:**
+1. Open `chrome://extensions/`
+2. Turn on Developer Mode
+3. Choose **Load unpacked** and select the `extension` folder
+4. Join a Google Meet, open the MeetBuddy popup, and save the email that should receive the summary
 
-   - Caption capture implementation
-   - Backend server setup
-   - Basic summarization logic
+Captions have to be visible in Meet. The page script clicks **Turn on captions** when that button is on screen.
 
-3. **Phase 3:**
-   - AI integration for improved summarization
-   - Email delivery system
-   - UI/UX improvements
+## Layout
 
-## Contributing
-
-Feel free to submit issues and enhancement requests!
+```text
+extension/          # Manifest V3 extension
+server/             # summary and email API
+```
