@@ -37,7 +37,7 @@ sendBtn.addEventListener("click", async () => {
   detailEl.textContent = "Sending…";
   await saveSettings();
   const result = await chrome.runtime.sendMessage({ type: "send-now" });
-  detailEl.textContent = result.ok ? result.summary : result.error;
+  detailEl.textContent = result && result.ok ? result.summary : (result && result.error) || "Could not send the summary";
   await refresh();
 });
 
