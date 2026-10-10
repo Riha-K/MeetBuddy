@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "MeetBuddy",
   "version": "1.0.0",
-  "description": "Capture Google Meet captions and email an AI summary.",
+  "description": "Capture Google Meet captions and email an AI summary. Does not use the microphone.",
   "permissions": ["storage"],
   "host_permissions": [
     "https://meet.google.com/*",
