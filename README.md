@@ -35,7 +35,7 @@ SMTP_USER=your_smtp_username
 SMTP_PASS=your_smtp_password
 ```
 
-The API listens on `http://127.0.0.1:3001`.
+The API listens on `http://127.0.0.1:3001`. `server/.env` is listed in `.gitignore`.
 
 - `GET /health` — server is up
 - `POST /api/summarize` — body `{ "transcript", "to" }`, returns the summary after the mail is sent
