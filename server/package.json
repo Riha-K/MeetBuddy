@@ -1,6 +1,7 @@
 {
   "name": "meetbuddy-server",
   "version": "1.0.0",
+  "description": "MeetBuddy summary and email API",
   "private": true,
   "main": "index.js",
   "scripts": {
