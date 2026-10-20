@@ -5,7 +5,7 @@ function transport() {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   if (!host || !user || !pass) {
-    throw new Error("SMTP_HOST, SMTP_USER, and SMTP_PASS are required in server/.env");
+    throw new Error("SMTP_HOST, SMTP_USER, and SMTP_PASS must be set in server/.env");
   }
   const port = Number(process.env.SMTP_PORT || 587);
   return nodemailer.createTransport({
