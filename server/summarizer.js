@@ -17,7 +17,7 @@ async function summarize(transcript) {
         {
           role: "system",
           content:
-            "Summarize a meeting transcript. Use short sections for decisions, action items, and open questions. Leave a section out if the transcript does not support it.",
+            "Summarize a meeting transcript. Use short sections for decisions, action items, and open questions. Leave a section out when the transcript does not support it.",
         },
         { role: "user", content: transcript },
       ],
