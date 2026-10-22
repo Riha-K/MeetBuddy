@@ -55,3 +55,22 @@ Captions have to be visible in Meet. The page script clicks **Turn on captions**
 extension/          # Manifest V3 extension
 server/             # summary and email API
 ```
+
+## How captions become a summary
+
+1. `content.js` watches the Meet DOM, turns captions on when needed, and waits until a caption line stops changing (`STABLE_MS`) before sending it.
+2. `background.js` keeps the meeting transcript in memory and talks to the popup.
+3. When you click **Send summary** (or the meeting ends), the extension posts `{ transcript, to }` to `POST /api/summarize`.
+4. The server calls OpenAI for a short summary, then Nodemailer sends the email using your SMTP settings.
+
+## Troubleshooting
+
+| Symptom | What to check |
+| --- | --- |
+| No captions captured | Captions must be visible in Meet. Reload the Meet tab after loading the extension. |
+| Popup says server down | Start `server/` with `npm start` and open `http://127.0.0.1:3001/health`. |
+| Summary API fails | Confirm `OPENAI_API_KEY` in `server/.env`. |
+| Email not received | Confirm SMTP host/user/pass and that the “to” address in the popup is correct. |
+| Wrong Meet tab | Open the popup while the Google Meet tab is focused. |
+
+Privacy note: the extension never uses the microphone. It only reads caption text already shown on the page and sends that text to your local server.
