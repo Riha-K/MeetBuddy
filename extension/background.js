@@ -1,5 +1,22 @@
 importScripts("caption-parse.js");
 
+// MeetBuddy service worker (Manifest V3)
+// --------------------------------------
+// Owns per-tab meeting state in chrome.storage.session and talks to:
+//   - content.js  → caption / meeting-ended messages
+//   - popup.js    → status / save-settings / send-now
+//   - local Node  → POST /api/summarize { transcript, to }
+//
+// Message types:
+//   caption        append one stable caption line for sender.tab
+//   meeting-ended  flush + summarize for that tab
+//   status         popup refresh (active Meet tab or lastMeeting fallback)
+//   save-settings  persist email + server URL in chrome.storage.local
+//   send-now       manual summarize from popup
+//
+// Privacy: no microphone. Only caption text already shown on the Meet page
+// is stored and forwarded to the user-configured local server.
+
 const DEFAULT_SERVER = "http://127.0.0.1:3001";
 const sending = new Set();
 
