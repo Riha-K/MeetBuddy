@@ -1,3 +1,4 @@
+// Read on-screen Meet captions only; no microphone access.
 const MEETING_CODE = /\/[a-z]{3}-[a-z]{4}-[a-z]{3}(?:\?|$)/i;
 const STABLE_MS = 800;
 
