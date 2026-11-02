@@ -74,3 +74,5 @@ server/             # summary and email API
 | Wrong Meet tab | Open the popup while the Google Meet tab is focused. |
 
 Privacy note: the extension never uses the microphone. It only reads caption text already shown on the page and sends that text to your local server.
+
+<!-- refreshed: 2026-11-02 -->
